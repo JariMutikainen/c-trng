@@ -26,6 +26,7 @@ void populateDictionary(char etbl[][MAX],char ftbl[][MAX],int* wordpairs,
      * function.*/
 
     int targetIndex(char etbl[][MAX], char key[],int wordpairs);
+    void addNewWords(char etbl[][MAX],char ftbl[][MAX],char ew[],char fw[],int index,int* wordpairs);
     int newIndex;
     char ew[MAX],fw[MAX];
     while(*wordpairs<maxwords) {
@@ -36,7 +37,7 @@ void populateDictionary(char etbl[][MAX],char ftbl[][MAX],int* wordpairs,
         printf("Enter the Finnish word for '%s': ",ew);
         scanf("%s",fw);
         newIndex = targetIndex(etbl,ew,*wordpairs);
-
+        addNewWords(etbl,ftbl,ew,fw,newIndex,wordpairs);
         printf("wordpairs = %d, newIndex = %d, %s = %s\n",*wordpairs,newIndex,ew,fw);
     }
     return;
@@ -68,3 +69,24 @@ int targetIndex(char etbl[][MAX], char key[],int wordpairs) {
    }
    return k;
 }
+//------------------------------ addNewWords------------------------------------  
+void addNewWords(char etbl[][MAX],char ftbl[][MAX],char ew[],char fw[],int index,
+                int* wordpairs) {
+    /* This function adds a new english word ew into the etbl and the correspon-
+     * ding finnish word fw into the ftbl. The index of the new entry is index.
+     * Before the new entry can be added all the existing elements from index
+     * to the end of the array must be shifted one position to the right. This
+     * will create an empty vacancy for the new entry. Once the new entry has been
+     * added the number of wordpairs must be incremented by one. */
+
+    int i;
+    for(i=*wordpairs-1;i>=index;i--) { // Shift right all the existing elements
+        strcpy(etbl[i+1],etbl[i]);     // from index to the end of the arrays.
+        strcpy(ftbl[i+1],ftbl[i]);
+    }
+    strcpy(etbl[index],ew);
+    strcpy(ftbl[index],fw);
+    (*wordpairs)++;
+    return;
+}
+
