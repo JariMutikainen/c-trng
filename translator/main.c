@@ -11,9 +11,17 @@ int main()
     void populateDictionary(char etbl[][MAX],char ftbl[][MAX],int* wordpairs,
                            int maxwords); 
     void printDictionary(char etbl[][MAX],char ftbl[][MAX],int pairs); 
+    void translate(char etbl[][MAX],char ftbl[][MAX],int* wordpairs);
     char english[MAXWORDS][MAX],finnish[MAXWORDS][MAX];
     int wordpairs = 0;
-    populateDictionary(english,finnish,&wordpairs,MAXWORDS); 
+    //populateDictionary(english,finnish,&wordpairs,MAXWORDS); 
+    strcpy(english[0] , "alarm"); strcpy(finnish[0] , "halutus");
+    strcpy(english[1] , "bye"); strcpy(finnish[1] , "nakemiin");
+    strcpy(english[2] , "charlie"); strcpy(finnish[2] , "kari");
+    strcpy(english[3] , "day"); strcpy(finnish[3] , "paiva");
+    strcpy(english[4] , "week"); strcpy(finnish[4] , "viikko");
+    wordpairs = 5;
+    translate(english,finnish,&wordpairs);
     printDictionary(english,finnish,wordpairs); 
     return 0;
 }
@@ -88,5 +96,9 @@ void addNewWords(char etbl[][MAX],char ftbl[][MAX],char ew[],char fw[],int index
     strcpy(ftbl[index],fw);
     (*wordpairs)++;
     return;
+}
+//----------------------------- translate ------------------------------  
+void translate(char etbl[][MAX],char ftbl[][MAX],int* wordpairs) {
+
 }
 
