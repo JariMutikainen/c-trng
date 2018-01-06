@@ -11,17 +11,18 @@ int main()
     void populateDictionary(char etbl[][MAX],char ftbl[][MAX],int* wordpairs,
                            int maxwords); 
     void printDictionary(char etbl[][MAX],char ftbl[][MAX],int pairs); 
-    void translate(char etbl[][MAX],char ftbl[][MAX],int* wordpairs);
+    void translate(char etbl[][MAX],char ftbl[][MAX],int wordpairs);
     char english[MAXWORDS][MAX],finnish[MAXWORDS][MAX];
     int wordpairs = 0;
-    //populateDictionary(english,finnish,&wordpairs,MAXWORDS); 
-    strcpy(english[0] , "alarm"); strcpy(finnish[0] , "halutus");
-    strcpy(english[1] , "bye"); strcpy(finnish[1] , "nakemiin");
-    strcpy(english[2] , "charlie"); strcpy(finnish[2] , "kari");
-    strcpy(english[3] , "day"); strcpy(finnish[3] , "paiva");
-    strcpy(english[4] , "week"); strcpy(finnish[4] , "viikko");
-    wordpairs = 5;
-    translate(english,finnish,&wordpairs);
+    populateDictionary(english,finnish,&wordpairs,MAXWORDS); 
+//    strcpy(english[0] , "alarm"); strcpy(finnish[0] , "halutus");
+//    strcpy(english[1] , "bye"); strcpy(finnish[1] , "nakemiin");
+//    strcpy(english[2] , "charlie"); strcpy(finnish[2] , "kari");
+//    strcpy(english[3] , "day"); strcpy(finnish[3] , "paiva");
+//    strcpy(english[4] , "week"); strcpy(finnish[4] , "viikko");
+//    wordpairs = 5;
+    printDictionary(english,finnish,wordpairs); 
+    translate(english,finnish,wordpairs);
     printDictionary(english,finnish,wordpairs); 
     return 0;
 }
@@ -46,7 +47,7 @@ void populateDictionary(char etbl[][MAX],char ftbl[][MAX],int* wordpairs,
         scanf("%s",fw);
         newIndex = targetIndex(etbl,ew,*wordpairs);
         addNewWords(etbl,ftbl,ew,fw,newIndex,wordpairs);
-        printf("wordpairs = %d, newIndex = %d, %s = %s\n",*wordpairs,newIndex,ew,fw);
+        //printf("wordpairs = %d, newIndex = %d, %s = %s\n",*wordpairs,newIndex,ew,fw);
     }
     return;
 }
@@ -98,7 +99,42 @@ void addNewWords(char etbl[][MAX],char ftbl[][MAX],char ew[],char fw[],int index
     return;
 }
 //----------------------------- translate ------------------------------  
-void translate(char etbl[][MAX],char ftbl[][MAX],int* wordpairs) {
+void translate(char etbl[][MAX],char ftbl[][MAX],int wordpairs) {
+    /* This function asks for english words and tries to translate them into
+     * finnish.*/
 
+    int binarySearch(char tbl[][MAX], char key[], int elements);
+    char answ[MAX] = "Dummy";
+    int i;
+    while(strcmp(answ,"stop") != 0)
+    {
+        printf("Enter a word in English or enter 'stop' to terminate: ");
+        scanf("%s",answ);
+        i = binarySearch(etbl,answ,wordpairs);
+        if(i== -1) {
+            printf("%s can't be found in the dictionary.\n",answ);
+        } else {
+            printf("%s in English is %s in Finnish.\n",etbl[i],ftbl[i]);
+        }
+    } // while
 }
 
+//------------------------------ binarySearch------------------------------  
+int binarySearch(char tbl[][MAX], char key[], int elements) {
+    /* This function searches for the string key in the array tbl.
+     * It returns the index of the key if found, else it returns -1.
+     * */
+    int min = 0,max = elements - 1;
+    while(min <= max) {
+        int mid = (min + max) / 2;
+        if(strcmp(key,tbl[mid]) == 0) {
+            return mid;
+        } else if(strcmp(key,tbl[mid]) < 0) {
+            max = mid - 1;
+        } else {
+            min = mid + 1;
+        }
+    }
+    return -1; // min and max have crossed. Key was not found.
+}
+    
