@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# The .layout-file of codeBlocks
+*.layout
+
+# The backup files
+*~
