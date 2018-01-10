@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #define MAX 100
 
-typedef struct _obsType {
+typedef struct {
     int val;
     int cnt;
-} obsType;
+} NodeType;
 
 int main()
 {
-    void printAll(obsType** tbl, int elements);
-    obsType *numbers[MAX]; // An array of pointers.
-    obsType *new;
+    void printAll(NodeType** tbl, int elements);
+    NodeType *numbers[MAX]; // An array of pointers.
+    NodeType *new;
     int total = 0;          // Total number of entries in the numbers[]
     int rply = 2;
     printf("This program asks for integers one at a time. \n");
@@ -21,7 +21,7 @@ int main()
         printf("Next number: ");
         scanf("%d",&rply);
         if(total == 0) { // Add the first element
-            new = (obsType*) malloc(sizeof(obsType));
+            new = (NodeType*) malloc(sizeof(NodeType));
             new->val = rply;
             new->cnt = 1;
             numbers[0] = new;
@@ -32,7 +32,7 @@ int main()
     return 0;
 }
 //------------------------------ printAll ------------------------------  
-void printAll(obsType** tbl, int elements) {
+void printAll(NodeType** tbl, int elements) {
     int i;
     for(i=0;i<elements;i++) {
         printf("%d : %d\n",(*(tbl+i))->val,(*(tbl+i))->cnt);
