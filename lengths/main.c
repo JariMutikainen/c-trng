@@ -25,7 +25,7 @@ int main()
 
     subLen(&a,&b,&d);
     printf("%dm %dcm  -  %dm %dcm  = %dm %dcm\n",
-            a.m,a.cm,b.m,b.cm,d.m,d.cm);
+            a.m,a.cm,b.m,b.cm,d.m,((d.cm < 0) ? -d.cm : d.cm)); // No negative centimeters in the world!
 
     printf("Hello world!\n");
     return 0;
