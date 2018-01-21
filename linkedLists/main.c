@@ -12,10 +12,17 @@ int main() {
     void createLinkedList(int tbl[],int elements,NodePtrType* h,NodePtrType* t);
     void reverseLinkedList(NodePtrType* h, NodePtrType* t);
     void printLinkedList(NodePtrType top);
-    int numbers[] = {1,2,3,4,5,6,7};
+    int isAscendingList(NodePtrType t);
+    //int numbers[] = {1,2,3,4,5,6,7};
+    int numbers[] = {1,2,3,4,5,3,6,7};
     int elements = sizeof(numbers) / sizeof(int);
     createLinkedList(numbers,elements,&head,&tail);
     printLinkedList(head);
+    if(isAscendingList(head)) {
+        printf("This is an ascending list of integers.\n");
+    } else {
+        printf("This is not an ascending list of intergers.\n");
+    }
     reverseLinkedList(&head,&tail);
     printLinkedList(head);
     printf("%d,first=%d,last=%d\n",elements,head->val,tail->val);
@@ -84,4 +91,25 @@ void reverseLinkedList(NodePtrType* h, NodePtrType* t) {
     *t = newTail;
     return;
 }
+//------------------------------ isAscendingList ------------------------------  
+int isAscendingList(NodePtrType t) {
+    // This function returns 1 if the elements of the linked list are in the
+    // ascending order. Otherwise it returns a 0.
+    
+    NodePtrType prev = NULL,curr = t;
+    while(curr->next != NULL) { // Traverse the linked list
+        if(curr == t) {         // At the 1st node - i.e. 'top'
+            prev = curr;
+            curr = curr->next;  // Move on
+        } else { // The middle nodes
+            if(curr->val < prev->val) return 0;
+            prev = curr;
+            curr = curr->next;  // Move on
+        }
+    }
+    // Now we are at the last node
+    if(curr->val < prev->val) return 0;
+    else return 1;
+}    
+
 
