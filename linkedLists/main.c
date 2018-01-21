@@ -13,10 +13,12 @@ int main() {
     void reverseLinkedList(NodePtrType* h, NodePtrType* t);
     void printLinkedList(NodePtrType top);
     int isAscendingList(NodePtrType t);
-    //int numbers[] = {1,2,3,4,5,6,7};
-    int numbers[] = {1,2,3,4,5,3,6,7};
+    void deleteLinkedList(NodePtrType* h,NodePtrType* t);
+    int numbers[] = {1,2,3,4,5,6,7};
+    //int numbers[] = {1,2,3,4,5,3,6,7};
     int elements = sizeof(numbers) / sizeof(int);
     createLinkedList(numbers,elements,&head,&tail);
+    printf("Created head = %p, tail = %p \n",head,tail);
     printLinkedList(head);
     if(isAscendingList(head)) {
         printf("This is an ascending list of integers.\n");
@@ -24,8 +26,11 @@ int main() {
         printf("This is not an ascending list of intergers.\n");
     }
     reverseLinkedList(&head,&tail);
+    printf("Reversed head = %p, tail = %p \n",head,tail);
     printLinkedList(head);
-    printf("%d,first=%d,last=%d\n",elements,head->val,tail->val);
+    printf("head = %p, tail = %p before deletion\n",head,tail);
+    deleteLinkedList(&head,&tail);
+    printf("head = %p, tail = %p after deletion\n",head,tail);
     return 0;
 }
 //------------------------------ createLinkedList ------------------------------  
@@ -112,4 +117,23 @@ int isAscendingList(NodePtrType t) {
     else return 1;
 }    
 
-
+//------------------------------ deleteLinkedList ------------------------------  
+void deleteLinkedList(NodePtrType* h,NodePtrType* t) {
+    // This function deletes the linked list and sets the head and tail
+    // pointers in the calling function to NULL.
+    NodePtrType apu = NULL;
+    while(*h != *t) {
+        //printf("*h is %p, val is %d, *t is %p.\n",*h,(*h)->val,*t);
+        apu = *h;
+        *h = (*h)->next; // Moving the head pointer removes the node from the 
+                       // linked list
+        free(apu);
+    }
+    // head and tail are pointing to the same, last remaining element.
+    //printf("*h is %p, val is %d, *t is %p.\n",*h,(*h)->val,*t);
+    apu = *h;
+    *h = NULL;
+    *t = NULL;
+    free(apu);
+    return;
+}
