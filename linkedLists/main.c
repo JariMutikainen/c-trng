@@ -9,12 +9,14 @@ typedef struct node {
 int main() {
     NodePtrType head = NULL;
     NodePtrType tail = NULL;
-    NodePtrType curr, apu;
     void createLinkedList(int tbl[],int elements,NodePtrType* h,NodePtrType* t);
+    void reverseLinkedList(NodePtrType* h, NodePtrType* t);
     void printLinkedList(NodePtrType top);
     int numbers[] = {1,2,3,4,5,6,7};
     int elements = sizeof(numbers) / sizeof(int);
     createLinkedList(numbers,elements,&head,&tail);
+    printLinkedList(head);
+    reverseLinkedList(&head,&tail);
     printLinkedList(head);
     printf("%d,first=%d,last=%d\n",elements,head->val,tail->val);
     return 0;
@@ -50,3 +52,36 @@ void printLinkedList(NodePtrType top) {
     printf("%d\n",np->val); // The last element.
     return;
 }
+void reverseLinkedList(NodePtrType* h, NodePtrType* t) {
+    // This function reverses the order of the elements in the given linked 
+    // list. It updates the head and tail pointers of the calling function
+    // accordingly.
+
+    NodePtrType prev = NULL;
+    NodePtrType curr = NULL;
+    NodePtrType apu = NULL; 
+    NodePtrType newHead = NULL;
+    NodePtrType newTail = NULL;
+    curr = *h;
+    while(curr != *t) {
+        apu = curr->next; // Capture this to be used later for the jump to next
+        if(curr == *h) {  // The 1st of the original list
+            curr->next = NULL; // Becomes the last of the reversed list
+            newTail = curr;
+            prev = curr;
+            curr = apu; // Jump now
+        } else {
+            curr->next = prev;
+            prev = curr;
+            curr = apu; // Jump now
+        }
+    }
+    // curr is pointing to the tail of the original list now.
+    curr->next = prev;
+    newHead = curr;
+    // Update the head and tail pointers of the calling function
+    *h = newHead;
+    *t = newTail;
+    return;
+}
+
