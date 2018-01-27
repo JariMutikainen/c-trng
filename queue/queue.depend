@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1516953432 source:h:\githublocalrepository\c-trng\queue\main.c
+	<stdio.h>
+	<stdlib.h>
+
